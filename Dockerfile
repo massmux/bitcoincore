@@ -1,10 +1,10 @@
 From debian
-MAINTAINER Massimo Musumeci <massmux@denali.uk>
+MAINTAINER Massimo Musumeci <go@massmux.com>
 
 # Set noninteractive mode for apt-get
 ENV DEBIAN_FRONTEND noninteractive
 
-
+# prerequisites
 RUN    apt-get update
 RUN    apt-get install -y \
         autoconf \
@@ -65,4 +65,6 @@ RUN 	rm -Rf /usr/local/sbin && \
 
 
 EXPOSE 18443 18444
+
+VOLUME ["/root/.bitcoin"]
 
