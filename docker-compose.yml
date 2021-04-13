@@ -4,7 +4,7 @@ services:
   hansel:
     container_name: hansel
     hostname: hansel
-    image: node
+    image: bitcoin-node
     environment:
       - BX_CONFIG=/opt/wald/bx.cfg
     volumes:
@@ -17,7 +17,7 @@ services:
   gretel:
     container_name: gretel
     hostname: gretel
-    image: node
+    image: bitcoin-node
     environment:
       - BX_CONFIG=/opt/wald/bx.cfg
     volumes:
