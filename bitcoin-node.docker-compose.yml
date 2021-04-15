@@ -9,6 +9,7 @@ services:
       - BX_CONFIG=/opt/wald/bx.cfg
     volumes:
       - ./hansel:/root/.bitcoin
+      - ./wald:/opt/wald
     entrypoint: /root/run.sh
     working_dir: /opt/wald
     ports:
@@ -22,6 +23,7 @@ services:
       - BX_CONFIG=/opt/wald/bx.cfg
     volumes:
       - ./gretel:/root/.bitcoin
+      - ./wald:/opt/wald
     entrypoint: /root/run.sh
     working_dir: /opt/wald
     links:

@@ -66,5 +66,5 @@ RUN 	rm -Rf /usr/local/sbin && \
 
 EXPOSE 18443 18444
 
-VOLUME ["/root/.bitcoin"]
+VOLUME ["/root/.bitcoin","/opt/wald"]
 
