@@ -47,24 +47,24 @@ RUN    	cd /opt && \
     	make && \
     	make install
 
-#ADD ./utility /opt/wald/utility
-ADD ./wald /opt/wald
+
+ADD ./workdir /opt/workdir
 ADD ./run.sh /root/run.sh
 
 # https://github.com/libbitcoin/libbitcoin-explorer/wiki
-RUN cd /opt/wald/utility && \
+RUN cd /opt/workdir/utility && \
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode && \
     mv bx-linux-x64-qrcode bx && \
     chmod +x bx
 
-RUN chmod +x /root/run.sh
+RUN chmod +x /root/run.sh 
 
-# bizantino utility
+# bizantino utility (thanks to Aglietti & Barnini)
 RUN 	rm -Rf /usr/local/sbin && \
-	ln -s /opt/wald/utility /usr/local/sbin
+	ln -s /opt/workdir/utility /usr/local/sbin
 
 
 EXPOSE 18443 18444
 
-VOLUME ["/root/.bitcoin","/opt/wald"]
+VOLUME ["/root/.bitcoin"]
 
