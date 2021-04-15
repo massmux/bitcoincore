@@ -47,10 +47,10 @@ RUN    	cd /opt && \
     	make && \
     	make install
 
-ADD ./utility /opt/wald/utility
+#ADD ./utility /opt/wald/utility
+ADD ./wald /opt/wald
 ADD ./run.sh /root/run.sh
 
-# libbitcoin explorer
 # https://github.com/libbitcoin/libbitcoin-explorer/wiki
 RUN cd /opt/wald/utility && \
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode && \
