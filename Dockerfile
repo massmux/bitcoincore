@@ -48,21 +48,20 @@ RUN    	cd /opt && \
     	make install
 
 
-ADD ./workdir /opt/workdir
+ADD ./nodeworkdir /opt/nodeworkdir
 ADD ./run.sh /root/run.sh
+RUN chmod +x /root/run.sh 
+
 
 # https://github.com/libbitcoin/libbitcoin-explorer/wiki
-RUN cd /opt/workdir/utility && \
+RUN cd /opt/nodeworkdir/utility && \
     wget https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v3.2.0/bx-linux-x64-qrcode && \
     mv bx-linux-x64-qrcode bx && \
     chmod +x bx
 
-RUN chmod +x /root/run.sh 
-
 # bizantino utility (thanks to Aglietti & Barnini)
 RUN 	rm -Rf /usr/local/sbin && \
-	ln -s /opt/workdir/utility /usr/local/sbin
-
+	mv /opt/nodeworkdir/utility /usr/local/sbin
 
 EXPOSE 18443 18444
 
