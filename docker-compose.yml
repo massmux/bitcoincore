@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  hansel:
+    container_name: bitcoinnode
+    hostname: bitcoinnode
+    image: massmux/bitcoincore
+    environment:
+      - BX_CONFIG=/opt/nodeworkdir/bx.cfg
+    volumes:
+      - ./bitcoinnode:/root/.bitcoin
+      - ./nodeworkdir:/opt/nodeworkdir
+    entrypoint: /root/run.sh
+    working_dir: /opt/nodeworkdir
+    ports:
+      - 18443:18443
+      - 18444:18444
+
