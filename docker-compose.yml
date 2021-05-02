@@ -8,7 +8,7 @@ services:
     environment:
       - BX_CONFIG=/opt/nodeworkdir/bx.cfg
     volumes:
-      - ${PWD}/bitcoinnode:/root/.bitcoin
+      - ${PWD}/bitcoinnode:/data/.bitcoin
       - ${PWD}/nodeworkdir:/opt/nodeworkdir
     working_dir: /opt/nodeworkdir
     ports:
