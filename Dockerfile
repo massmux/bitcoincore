@@ -4,6 +4,11 @@ MAINTAINER Massimo Musumeci <go@massmux.com>
 # Set noninteractive mode for apt-get
 ENV DEBIAN_FRONTEND noninteractive
 
+# Pars
+ARG VERSION=0.21.0
+ARG ARCH=x86_64
+ARG OS=linux-gnu
+
 # prerequisites
 RUN    apt-get update
 RUN    apt-get install -y \
@@ -28,11 +33,15 @@ RUN    apt-get install -y \
 RUN pip install base58
 
 # install core
-RUN 	cd /root && wget https://bitcoincore.org/bin/bitcoin-core-0.21.0/bitcoin-0.21.0-x86_64-linux-gnu.tar.gz && \
-	tar xzvf bitcoin-0.21.0-x86_64-linux-gnu.tar.gz && \
-	mv /root/bitcoin-0.21.0/bin/* /usr/bin/ && \
+# Ref binary url: https://bitcoincore.org/bin/
+RUN 	cd /root && wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-$ARCH-$OS.tar.gz && \
+	tar xzvf bitcoin-$VERSION-$ARCH-$OS.tar.gz && \
+	mv /root/bitcoin-$VERSION/bin/* /usr/bin/ && \
 	chmod +x /usr/bin/bitcoin-cli && \
 	chmod +x /usr/bin/bitcoind
+
+# remove tarball
+RUN	rm -f /root/bitcoin-$VERSION-$ARCH-$OS.tar.gz
 
 	
 # install btcdeb
@@ -49,8 +58,6 @@ RUN    	cd /opt && \
 
 
 ADD ./nodeworkdir /opt/nodeworkdir
-ADD ./run.sh /root/run.sh
-RUN chmod +x /root/run.sh 
 
 
 # https://github.com/libbitcoin/libbitcoin-explorer/wiki
