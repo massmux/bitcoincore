@@ -5,7 +5,7 @@
 in order to build, from the folder do
 
 ```
-docker build -t bitcoincore .
+docker build -t massmux/bitcoincore:latest .
 ```
 
 

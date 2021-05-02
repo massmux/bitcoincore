@@ -63,7 +63,9 @@ RUN cd /opt/nodeworkdir/utility && \
 RUN 	rm -Rf /usr/local/sbin && \
 	mv /opt/nodeworkdir/utility /usr/local/sbin
 
+RUN mkdir -p /root/.bitcoin
+VOLUME /root/.bitcoin
+
 EXPOSE 18443 18444
 
-VOLUME ["/root/.bitcoin"]
-
+ENTRYPOINT ["bitcoind"]
