@@ -8,6 +8,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ARG VERSION=0.21.0
 ARG ARCH=x86_64
 ARG OS=linux-gnu
+ARG USER=bitcoind
+ARG DIR=/data
 
 # prerequisites
 RUN    apt-get update
@@ -32,16 +34,21 @@ RUN    apt-get install -y \
 
 RUN pip install base58
 
+RUN adduser --disabled-password \
+            --home "$DIR/" \
+            --gecos "" \
+            "$USER"
+
 # install core
 # Ref binary url: https://bitcoincore.org/bin/
-RUN 	cd /root && wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-$ARCH-$OS.tar.gz && \
+RUN 	cd /opt && wget https://bitcoincore.org/bin/bitcoin-core-$VERSION/bitcoin-$VERSION-$ARCH-$OS.tar.gz && \
 	tar xzvf bitcoin-$VERSION-$ARCH-$OS.tar.gz && \
-	mv /root/bitcoin-$VERSION/bin/* /usr/bin/ && \
+	mv /opt/bitcoin-$VERSION/bin/* /usr/bin/ && \
 	chmod +x /usr/bin/bitcoin-cli && \
 	chmod +x /usr/bin/bitcoind
 
 # remove tarball
-RUN	rm -f /root/bitcoin-$VERSION-$ARCH-$OS.tar.gz
+RUN	rm -f /opt/bitcoin-$VERSION-$ARCH-$OS.tar.gz
 
 	
 # install btcdeb
@@ -70,8 +77,17 @@ RUN cd /opt/nodeworkdir/utility && \
 RUN 	rm -Rf /usr/local/sbin && \
 	mv /opt/nodeworkdir/utility /usr/local/sbin
 
-RUN mkdir -p /root/.bitcoin
-VOLUME /root/.bitcoin
+
+USER $USER
+
+# Prevents `VOLUME $DIR/.bitcoind/` being created as owned by `root`
+RUN mkdir -p "$DIR/.bitcoin/"
+
+# Expose volume containing all `bitcoind` data
+VOLUME $DIR/.bitcoin/
+
+#RUN mkdir -p /root/.bitcoin
+#VOLUME /root/.bitcoin
 
 EXPOSE 18443 18444
 
